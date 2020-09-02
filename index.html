@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+</head>
+<body>
+    <canvas id="stage" width="400" height="400"></canvas>
+    <script type="text/javascript">
+
+        window.onload = function() {
+            var stage = document.getElementById('stage');
+            var context = stage.getContext("2d");
+            document.addEventListener("keydown", keyPush);
+
+            setInterval(game, 80);
+
+            const velocity = 1;
+
+            var velocityX = velocityY = 0;
+            var positionX = positionY = 10;
+            var squareLength = 20;
+            var numberSquare = 20;
+            var appleX = appleY = 15;
+
+            var trail = [];
+            tail = 5;
+
+            function game() {
+                positionX += velocityX;
+                positionY += velocityY;
+
+                if (positionX < 0) {
+                    positionX = numberSquare - 1;
+                }
+                if (positionX > numberSquare - 1) {
+                    positionX = 0;
+                }
+                if (positionY < 0) {
+                    positionY = numberSquare - 1;
+                }
+                if (positionY > numberSquare - 1) {
+                    positionY = 0;
+                }
+
+                context.fillStyle = "black";
+                context.fillRect(0,0, stage.width, stage.height);
+
+                context.fillStyle = "red";
+                context.fillRect(appleX * squareLength, appleY * squareLength, squareLength, squareLength);
+            
+                context.fillStyle = "green";
+                for(var i=0; i< trail.length; i++) {
+                    context.fillRect(trail[i].x * squareLength, trail[i].y * squareLength, squareLength - 1, squareLength - 1);
+                    if (trail[i].x === positionX && trail[i].y === positionY) {
+                        velocityX = velocityY = 0;
+                        tail = 5;
+                    }
+                }
+
+                trail.push({x: positionX, y: positionY})
+                while (trail.length > tail) {
+                    trail.shift();
+                }
+
+                if (appleX === positionX && appleY === positionY) {
+                    tail++;
+                    appleX = Math.floor(Math.random() * numberSquare);
+                    appleY = Math.floor(Math.random() * numberSquare);
+                }
+            }
+
+            function keyPush(event) {
+                switch (event.keyCode) {
+                    case 37: //Left
+                        velocityX = - velocity;
+                        velocityY = 0;
+                        break;
+                    case 38: //Up
+                        velocityX = 0;
+                        velocityY = - velocity;
+                        break;
+                    case 39: //Right
+                        velocityX = velocity;
+                        velocityY = 0;
+                        break;
+                    case 40: //Down
+                        velocityX = 0;
+                        velocityY = velocity;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>
