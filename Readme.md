@@ -6,6 +6,11 @@
   <img src="./snake-game.png" alt="gitgif" width="200px">
 </h1> 
 
+## 📄️ Sobre
+
+Ao comer as maçãs a cobra ficará cada vez maior, o jogador deve evitar morder o seu próprio corpo.
+
+---
 
 ## 🤖️ Tecnologias utilizadas
 
